@@ -18,38 +18,35 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import retrofit.GoalsService;
+import retrofit.ServiceFactory;
+import retrofit2.Call;
+
 public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalsViewHolder> {
     private List<Goal> goalsList = new ArrayList<>();
-    RequestFactory requestFactory;
+    GoalsService goalsService;
 
     private View addGoalView;
+    private String login;
 
     int count = 0;
 
-    public GoalsAdapter(RequestFactory requestFactory)
+    public GoalsAdapter(String login)
     {
-        this.requestFactory = requestFactory;
+        this.login = login;
     }
 
     class GoalsViewHolder extends RecyclerView.ViewHolder{
         private EditText descriptionTextView;
         private CheckBox checkBox;
-        //private DescriptionEditTextListener descriptionEditTextListener;
 
-        public GoalsViewHolder(View itemView/*, DescriptionEditTextListener descriptionEditTextListener*/){
+        public GoalsViewHolder(View itemView){
             super(itemView);
             descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
             checkBox = itemView.findViewById(R.id.checkbox);
 
-            //LayoutInflater inflater = (LayoutInflater) itemView.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            //addGoalView = inflater.inflate(R.layout.add_goal, null);
 
             addGoalView = itemView;
-            //Button updateGoalButton = itemView.findViewById(R.id.addSprintButton);
-
-            //itemView.addView(addGoalButton);
-            //this.descriptionEditTextListener = descriptionEditTextListener;
-            //this.descriptionTextView.addTextChangedListener(descriptionEditTextListener);
         }
         @SuppressLint("ResourceType")
         public void bind(final Goal goal)
@@ -71,7 +68,10 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalsViewHol
                     {
                         goal.setDescription(descriptionTextView.getText().toString());
                         descriptionTextView.setCursorVisible(false);
-                        requestFactory.getPutRequest().execute(goal);
+
+                        Call<Object> response = ServiceFactory.getGoalsService().replaceGoal(login,
+                                goal.getIdSprint(), goal.getId(), goal);
+                        response.enqueue(RequestFactory.getPutRequest());
                     }
                     else
                     {
@@ -84,49 +84,21 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalsViewHol
             checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View view) {
                     if (checkBox.isChecked()) {
-                        //checkBox.setChecked(false);
-                        //descriptionTextView.setCheckMarkDrawable(android.R.drawable.checkbox_off_background);
-                        //descriptionTextView.setCheckMarkDrawable(android.R.attr.listChoiceIndicatorMultiple);
                         goal.setIsDone(true);
                         descriptionTextView.setPaintFlags(normalFlags| Paint.STRIKE_THRU_TEXT_FLAG);
                     } else {
-                        //checkBox.setChecked(true);
                         goal.setIsDone(false);
                         descriptionTextView.setPaintFlags(normalFlags);
                         Log.i("GoalsAdapter", "Set isdone");
-                        //descriptionTextView.setCheckMarkDrawable(android.R.drawable.checkbox_on_background);
-                        //descriptionTextView.setCheckMarkDrawable(android.R.attr.listChoiceIndicatorMultiple);
                     }
                     Log.i("GoalsAdapter", "Before executing a put request");
-                    requestFactory.getPutRequest().execute(goal);
+                    Call<Object> response = ServiceFactory.getGoalsService().replaceGoal(login, goal.getIdSprint(), goal.getId(),
+                            goal);
+                    response.enqueue(RequestFactory.getPutRequest());
                 }
             });
         }
     }
-
-    /*private class DescriptionEditTextListener implements TextWatcher{
-
-        private int position;
-
-        public void updatePosition(int position){
-            this.position = position;
-        }
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            goalsList.get(position).setDescription(s.toString());
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
-    }*/
-
 
 
     @Override
@@ -140,7 +112,6 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalsViewHol
     @Override
     public void onBindViewHolder(@NonNull GoalsViewHolder holder, int position) {
         holder.bind(goalsList.get(position));
-        //holder.descriptionEditTextListener.updatePosition(holder.getAdapterPosition());
         holder.descriptionTextView.setText(goalsList.get(holder.getAdapterPosition()).getDescription());
     }
 

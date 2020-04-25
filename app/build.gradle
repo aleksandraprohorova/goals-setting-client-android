@@ -44,4 +44,7 @@ dependencies {
 
     implementation 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.1'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-jackson:2.4.0'
 }
