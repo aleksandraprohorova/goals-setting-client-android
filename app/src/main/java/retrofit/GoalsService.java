@@ -20,7 +20,7 @@ public interface GoalsService {
     Call<Object> addGoal(@Path("login") String login,@Path("idSprint") Long idSprint, @Body Goal goal);
 
     @DELETE("users/{login}/sprints/{idSprint}/goals/{idGoal}")
-    Call<Object> deleteSprint(@Path("login") String login, @Path("idSprint") Long idSprint, @Path("idGoal") Long idGoal);
+    Call<Object> deleteGoal(@Path("login") String login, @Path("idSprint") Long idSprint, @Path("idGoal") Long idGoal);
 
     @PUT("users/{login}/sprints/{idSprint}/goals/{idGoal}")
     Call<Object> replaceGoal(@Path("login") String login, @Path("idSprint") Long idSprint,

@@ -16,24 +16,62 @@ import com.example.goalssetting.R;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
-import retrofit.GoalsService;
 import retrofit.ServiceFactory;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalsViewHolder> {
+public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalsViewHolder>
+    implements ItemTouchHelperAdapter
+{
     private List<Goal> goalsList = new ArrayList<>();
-    GoalsService goalsService;
-
-    private View addGoalView;
     private String login;
-
-    int count = 0;
 
     public GoalsAdapter(String login)
     {
         this.login = login;
+    }
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(goalsList, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(goalsList, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
+    }
+
+    @Override
+    public void onItemDismiss(final int position) {
+        Goal tmp = goalsList.get(position);
+        Call<Object> response = ServiceFactory.getGoalsService().deleteGoal(login, tmp.getIdSprint(), tmp.getId());
+        response.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.i("GoalsAdapter", "Before looking at response");
+                if (response.isSuccessful()) {
+                    Log.i("GoalsAdapter", "Deleted goal successfully");
+                    goalsList.remove(position);
+                    notifyItemRemoved(position);
+                } else {
+                    Log.i("GoalsAdapter", "Couldn't delete goal");
+                }
+            }
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.i("GoalsAdapter", "Failed request to delete goal: " + t.getMessage());
+            }
+        });
+
     }
 
     class GoalsViewHolder extends RecyclerView.ViewHolder{
@@ -44,9 +82,6 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalsViewHol
             super(itemView);
             descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
             checkBox = itemView.findViewById(R.id.checkbox);
-
-
-            addGoalView = itemView;
         }
         @SuppressLint("ResourceType")
         public void bind(final Goal goal)
@@ -130,7 +165,8 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalsViewHol
     }
     public void addItem(Goal newItem) {
         goalsList.add(newItem);
-        notifyDataSetChanged();
+        notifyItemInserted(getItemCount() - 1);
+        //notifyDataSetChanged();
     }
 
 

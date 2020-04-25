@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -91,6 +92,10 @@ public class GoalsActivity extends AppCompatActivity {
                 });
             }
         });
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(goalsAdapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(viewOfGoals);
     }
 
     @Override
