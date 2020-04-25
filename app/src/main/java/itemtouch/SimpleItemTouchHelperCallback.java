@@ -1,4 +1,4 @@
-package goals;
+package itemtouch;
 
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +14,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     public boolean isLongPressDragEnabled() {
         return true;
     }
+
 
     @Override
     public boolean isItemViewSwipeEnabled() {

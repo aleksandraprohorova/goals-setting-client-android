@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +16,7 @@ import com.example.goalssetting.R;
 import java.util.ArrayList;
 
 import goals.GoalsActivity;
+import itemtouch.SimpleItemTouchHelperCallback;
 import retrofit.ServiceFactory;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,6 +30,14 @@ public class SprintsActivity extends AppCompatActivity {
     private ArrayList<Sprint> sprints;
 
     private String login;
+    private SprintAdapter.OnSprintClickListener onSprintClickListener = new SprintAdapter.OnSprintClickListener() {
+        @Override
+        public void onSprintClick(Sprint sprint) {
+            Toast.makeText(SprintsActivity.this, "Sprint clicked", Toast.LENGTH_SHORT).show();
+            launchGoalsActivity(sprint.getId());
+        }
+    };
+
 
     private void launchGoalsActivity(long id)
     {
@@ -41,16 +51,7 @@ public class SprintsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        SprintAdapter.OnSprintClickListener onSprintClickListener = new SprintAdapter.OnSprintClickListener() {
-            @Override
-            public void onSprintClick(Sprint sprint) {
-                Toast.makeText(SprintsActivity.this, "Sprint clicked", Toast.LENGTH_SHORT).show();
-                launchGoalsActivity(sprint.getId());
-            }
-        };
-        sprintAdapter = new SprintAdapter(onSprintClickListener);
-        viewOfSprints.setAdapter(sprintAdapter);
-
+        sprintAdapter.clearItems();
         getAllSprints();
     }
 
@@ -63,6 +64,13 @@ public class SprintsActivity extends AppCompatActivity {
         viewOfSprints.setLayoutManager(new LinearLayoutManager(this));
 
         login = "second";
+
+        sprintAdapter = new SprintAdapter(onSprintClickListener, login);
+        viewOfSprints.setAdapter(sprintAdapter);
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(sprintAdapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(viewOfSprints);
     }
 
     private void getAllSprints() {
@@ -89,6 +97,7 @@ public class SprintsActivity extends AppCompatActivity {
 
     public void addSprint(View v) {
         final Sprint tmp = new Sprint();
+        sprintAdapter.addItem(tmp);
         //new AddSprintsRequest().execute(new Sprint());
 
         Call<Object> response = ServiceFactory.getSprintsService().addSprint(login, tmp);
@@ -97,8 +106,8 @@ public class SprintsActivity extends AppCompatActivity {
             public void onResponse(Call<Object> call, Response<Object> response) {
                 if (response.isSuccessful()) {
                     Log.i("SprintsActivity", "response successfull");
-                    sprintAdapter.addItem(tmp);
-                    launchGoalsActivity(tmp.getId());
+                    //sprintAdapter.addItem(tmp);
+                    launchGoalsActivity((Integer)response.body());
                 } else {
                     Toast.makeText(SprintsActivity.this, "Couldn't create sprint", Toast.LENGTH_SHORT).show();
                 }

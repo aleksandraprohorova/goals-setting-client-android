@@ -27,6 +27,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
+import itemtouch.SimpleItemTouchHelperCallback;
 import retrofit.ServiceFactory;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,6 +62,7 @@ public class GoalsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        goalsAdapter.clearItems();
         getCurrentSprint();
         getAllGoals();
 
@@ -92,10 +94,6 @@ public class GoalsActivity extends AppCompatActivity {
                 });
             }
         });
-
-        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(goalsAdapter);
-        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
-        touchHelper.attachToRecyclerView(viewOfGoals);
     }
 
     @Override
@@ -130,6 +128,10 @@ public class GoalsActivity extends AppCompatActivity {
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         addGoalView = inflater.inflate(R.layout.add_goal, null);
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(goalsAdapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(viewOfGoals);
 
     }
 

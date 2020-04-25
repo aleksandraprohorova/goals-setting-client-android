@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import itemtouch.ItemTouchHelperAdapter;
 import retrofit.ServiceFactory;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -165,8 +166,8 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalsViewHol
     }
     public void addItem(Goal newItem) {
         goalsList.add(newItem);
-        notifyItemInserted(getItemCount() - 1);
-        //notifyDataSetChanged();
+        //notifyItemInserted(getItemCount());
+        notifyDataSetChanged();
     }
 
 

@@ -1,4 +1,4 @@
-package goals;
+package itemtouch;
 
 public interface ItemTouchHelperAdapter {
     boolean onItemMove(int fromPosition, int toPosition);
