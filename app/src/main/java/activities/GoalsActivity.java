@@ -1,4 +1,4 @@
-package goals;
+package activities;
 
 
 import android.app.DatePickerDialog;
@@ -27,12 +27,14 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
+import entity.Goal;
+import adapters.GoalsAdapter;
 import itemtouch.SimpleItemTouchHelperCallback;
 import retrofit.ServiceFactory;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import sprints.Sprint;
+import entity.Sprint;
 
 public class GoalsActivity extends AppCompatActivity {
 

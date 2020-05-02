@@ -1,4 +1,4 @@
-package sprints;
+package adapters;
 
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import entity.Sprint;
 import itemtouch.ItemTouchHelperAdapter;
 import retrofit.ServiceFactory;
 import retrofit2.Call;

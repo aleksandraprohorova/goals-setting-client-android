@@ -1,4 +1,4 @@
-package sprints;
+package activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,12 +15,13 @@ import com.example.goalssetting.R;
 
 import java.util.ArrayList;
 
-import goals.GoalsActivity;
 import itemtouch.SimpleItemTouchHelperCallback;
 import retrofit.ServiceFactory;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import entity.Sprint;
+import adapters.SprintAdapter;
 
 public class SprintsActivity extends AppCompatActivity {
 

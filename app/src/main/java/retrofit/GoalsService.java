@@ -1,6 +1,6 @@
 package retrofit;
 
-import goals.Goal;
+import entity.Goal;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;

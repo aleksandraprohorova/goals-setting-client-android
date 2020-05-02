@@ -12,7 +12,7 @@
     android:background="@color/colorBoard"
     android:layout_margin="10dp"
     android:padding="10dp"
-    tools:context="sprints.SprintsActivity">
+    tools:context="activities.SprintsActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="5dp"

@@ -1,4 +1,4 @@
-package goals;
+package adapters;
 
 import android.annotation.SuppressLint;
 import android.graphics.Paint;
@@ -19,6 +19,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import entity.Goal;
+import retrofit.RequestFactory;
 import itemtouch.ItemTouchHelperAdapter;
 import retrofit.ServiceFactory;
 import retrofit2.Call;
