@@ -56,7 +56,7 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalsViewHol
     @Override
     public void onItemDismiss(final int position) {
         Goal tmp = goalsList.get(position);
-        Call<Object> response = ServiceFactory.getGoalsService().deleteGoal(login, tmp.getIdSprint(), tmp.getId());
+        Call<Object> response = ServiceFactory.getGoalsService().deleteGoal(tmp.getIdSprint(), tmp.getId());
         response.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
@@ -107,7 +107,7 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalsViewHol
                         goal.setDescription(descriptionTextView.getText().toString());
                         descriptionTextView.setCursorVisible(false);
 
-                        Call<Object> response = ServiceFactory.getGoalsService().replaceGoal(login,
+                        Call<Object> response = ServiceFactory.getGoalsService().replaceGoal(
                                 goal.getIdSprint(), goal.getId(), goal);
                         response.enqueue(RequestFactory.getPutRequest());
                     }
@@ -130,7 +130,7 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalsViewHol
                         Log.i("GoalsAdapter", "Set isdone");
                     }
                     Log.i("GoalsAdapter", "Before executing a put request");
-                    Call<Object> response = ServiceFactory.getGoalsService().replaceGoal(login, goal.getIdSprint(), goal.getId(),
+                    Call<Object> response = ServiceFactory.getGoalsService().replaceGoal(goal.getIdSprint(), goal.getId(),
                             goal);
                     response.enqueue(RequestFactory.getPutRequest());
                 }

@@ -11,18 +11,18 @@ import entity.Sprint;
 
 
 public interface SprintsService {
-    @GET("users/{login}/sprints/{idSprint}")
-    Call<Sprint> getSprintById(@Path("login") String login, @Path("idSprint") Long idSprint);
+    @GET("users/sprints/{idSprint}")
+    Call<Sprint> getSprintById(@Path("idSprint") Long idSprint);
 
-    @GET("users/{login}/sprints")
-    Call<Iterable<Sprint>> getAllSprints(@Path("login") String login);
+    @GET("users/sprints")
+    Call<Iterable<Sprint>> getAllSprints();
 
-    @POST("users/{login}/sprints")
-    Call<Object> addSprint(@Path("login") String login, @Body Sprint sprint);
+    @POST("users/sprints")
+    Call<Object> addSprint(@Body Sprint sprint);
 
-    @DELETE("users/{login}/sprints/{idSprint}")
-    Call<Object> deleteSprint(@Path("login") String login, @Path("idSprint") Long idSprint);
+    @DELETE("users/sprints/{idSprint}")
+    Call<Object> deleteSprint(@Path("idSprint") Long idSprint);
 
-    @PUT("users/{login}/sprints/{idSprint}")
-    Call<Object> replaceSprint(@Path("login") String login, @Path("idSprint") Long idSprint, @Body Sprint newSprint);
+    @PUT("users/sprints/{idSprint}")
+    Call<Object> replaceSprint(@Path("idSprint") Long idSprint, @Body Sprint newSprint);
 }

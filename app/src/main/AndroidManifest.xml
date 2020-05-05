@@ -10,15 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="activities.SprintsActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name="activities.AuthorizationActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name="activities.SprintsActivity">
+
         </activity>
         <activity android:name="activities.GoalsActivity">
         </activity>
+        <activity android:name="activities.RegistrationActivity" />
     </application>
 
 </manifest>

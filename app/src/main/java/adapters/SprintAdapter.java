@@ -57,7 +57,7 @@ public class SprintAdapter extends RecyclerView.Adapter<SprintAdapter.SprintView
         Long idSprint = sprintsList.get(position).getId();
         sprintsList.remove(position);
         notifyItemRemoved(position);
-        Call<Object> response = ServiceFactory.getSprintsService().deleteSprint(login, idSprint);
+        Call<Object> response = ServiceFactory.getSprintsService().deleteSprint(idSprint);
         response.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {

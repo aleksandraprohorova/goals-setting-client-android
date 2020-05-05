@@ -15,13 +15,13 @@ import com.example.goalssetting.R;
 
 import java.util.ArrayList;
 
+import adapters.SprintAdapter;
+import entity.Sprint;
 import itemtouch.SimpleItemTouchHelperCallback;
 import retrofit.ServiceFactory;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import entity.Sprint;
-import adapters.SprintAdapter;
 
 public class SprintsActivity extends AppCompatActivity {
 
@@ -49,14 +49,6 @@ public class SprintsActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        sprintAdapter.clearItems();
-        getAllSprints();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sprints);
@@ -64,7 +56,10 @@ public class SprintsActivity extends AppCompatActivity {
         viewOfSprints = findViewById(R.id.viewOfSprints);
         viewOfSprints.setLayoutManager(new LinearLayoutManager(this));
 
-        login = "second";
+        Intent intent = getIntent();
+        login = intent.getStringExtra("login");
+
+        Log.i("SprintsActivity", login);
 
         sprintAdapter = new SprintAdapter(onSprintClickListener, login);
         viewOfSprints.setAdapter(sprintAdapter);
@@ -74,8 +69,18 @@ public class SprintsActivity extends AppCompatActivity {
         touchHelper.attachToRecyclerView(viewOfSprints);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        sprintAdapter.clearItems();
+        getAllSprints();
+    }
+
+
+
     private void getAllSprints() {
-        Call<Iterable<Sprint>> response = ServiceFactory.getSprintsService().getAllSprints(login);
+        Call<Iterable<Sprint>> response = ServiceFactory.getSprintsService().getAllSprints();
         response.enqueue(new Callback<Iterable<Sprint>>() {
             @Override
             public void onResponse(Call<Iterable<Sprint>> call, Response<Iterable<Sprint>> response) {
@@ -101,7 +106,7 @@ public class SprintsActivity extends AppCompatActivity {
         sprintAdapter.addItem(tmp);
         //new AddSprintsRequest().execute(new Sprint());
 
-        Call<Object> response = ServiceFactory.getSprintsService().addSprint(login, tmp);
+        Call<Object> response = ServiceFactory.getSprintsService().addSprint(tmp);
         response.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
