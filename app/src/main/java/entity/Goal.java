@@ -1,4 +1,4 @@
-package goals;
+package entity;
 
 public class Goal {
     private String description;

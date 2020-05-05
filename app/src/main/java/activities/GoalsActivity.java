@@ -1,4 +1,4 @@
-package goals;
+package activities;
 
 
 import android.app.DatePickerDialog;
@@ -27,12 +27,14 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
+import entity.Goal;
+import adapters.GoalsAdapter;
 import itemtouch.SimpleItemTouchHelperCallback;
 import retrofit.ServiceFactory;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import sprints.Sprint;
+import entity.Sprint;
 
 public class GoalsActivity extends AppCompatActivity {
 
@@ -194,7 +196,7 @@ public class GoalsActivity extends AppCompatActivity {
     }
 
     private void getCurrentSprint() {
-        Call<Sprint> response = ServiceFactory.getSprintsService().getSprintById(login, idSprint);
+        Call<Sprint> response = ServiceFactory.getSprintsService().getSprintById(idSprint);
         response.enqueue(new Callback<Sprint>() {
             @Override
             public void onResponse(Call<Sprint> call, Response<Sprint> response) {
@@ -216,7 +218,7 @@ public class GoalsActivity extends AppCompatActivity {
     }
 
     void getAllGoals() {
-        Call<Iterable<Goal>> response = ServiceFactory.getGoalsService().getAllGoals(login, idSprint);
+        Call<Iterable<Goal>> response = ServiceFactory.getGoalsService().getAllGoals(idSprint);
         response.enqueue(new Callback<Iterable<Goal>>() {
             @Override
             public void onResponse(Call<Iterable<Goal>> call, Response<Iterable<Goal>> response) {
@@ -236,7 +238,7 @@ public class GoalsActivity extends AppCompatActivity {
         });
     }
     private void addGoal(final Goal goal) {
-        Call<Object> response = ServiceFactory.getGoalsService().addGoal(login, idSprint, goal);
+        Call<Object> response = ServiceFactory.getGoalsService().addGoal(idSprint, goal);
         response.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
@@ -258,7 +260,7 @@ public class GoalsActivity extends AppCompatActivity {
     }
 
     private void updateSprint() {
-        Call<Object> response = ServiceFactory.getSprintsService().replaceSprint(login, idSprint, sprint);
+        Call<Object> response = ServiceFactory.getSprintsService().replaceSprint(idSprint, sprint);
         Calendar tmp = sprint.getEndDate();
         Log.i("GoalsActivity", "Date is " + tmp.toString());
         response.enqueue(new Callback<Object>() {

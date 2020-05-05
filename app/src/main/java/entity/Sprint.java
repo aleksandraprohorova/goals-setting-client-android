@@ -1,4 +1,4 @@
-package sprints;
+package entity;
 
 import java.util.Calendar;
 

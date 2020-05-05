@@ -1,4 +1,4 @@
-package sprints;
+package adapters;
 
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import entity.Sprint;
 import itemtouch.ItemTouchHelperAdapter;
 import retrofit.ServiceFactory;
 import retrofit2.Call;
@@ -56,7 +57,7 @@ public class SprintAdapter extends RecyclerView.Adapter<SprintAdapter.SprintView
         Long idSprint = sprintsList.get(position).getId();
         sprintsList.remove(position);
         notifyItemRemoved(position);
-        Call<Object> response = ServiceFactory.getSprintsService().deleteSprint(login, idSprint);
+        Call<Object> response = ServiceFactory.getSprintsService().deleteSprint(idSprint);
         response.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {

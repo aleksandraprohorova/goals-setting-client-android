@@ -11,7 +11,7 @@
     android:background="@color/colorBoard"
     android:layout_margin="10dp"
     android:padding="10dp"
-    tools:context="goals.GoalsActivity"
+    tools:context="activities.GoalsActivity"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:clickable="true"
