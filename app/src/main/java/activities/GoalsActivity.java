@@ -80,6 +80,7 @@ public class GoalsActivity extends AppCompatActivity {
                 cancelButton.setEms(10);
 
                 final EditText newGoalEditText = findViewById(R.id.newGoalEditText);
+                newGoalEditText.setText("");
                 saveGoalButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -159,8 +160,7 @@ public class GoalsActivity extends AppCompatActivity {
             tmp.set(Calendar.MONTH, monthOfYear);
             tmp.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             sprint.setStartDate(tmp);
-            //UpdateSprintRequest.execute();
-            //setInitialDateTime();
+
             updateSprint();
         }
     };
@@ -169,9 +169,6 @@ public class GoalsActivity extends AppCompatActivity {
 
             Calendar tmp = Calendar.getInstance();
             Log.i("GoalsActivity", "Before setting date is " + tmp.toString());
-            //tmp.set(Calendar.YEAR, year);
-            //tmp.set(Calendar.MONTH, monthOfYear);
-            //tmp.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             tmp.set(year, monthOfYear, dayOfMonth);
 
             sprint.setEndDate(tmp);

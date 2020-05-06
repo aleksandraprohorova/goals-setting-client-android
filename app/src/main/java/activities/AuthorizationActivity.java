@@ -30,6 +30,15 @@ public class AuthorizationActivity  extends AppCompatActivity {
         loginEditText = findViewById(R.id.loginEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        loginEditText.setText("");
+        passwordEditText.setText("");
+        loginEditText.clearFocus();
+        passwordEditText.clearFocus();
+    }
     private void launchSprintsActivity(String login, String password)
     {
         Intent intent = new Intent(this, SprintsActivity.class);
