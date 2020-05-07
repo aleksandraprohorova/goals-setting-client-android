@@ -19,7 +19,8 @@ public class ServiceFactory {
                 .addInterceptor(new BasicAuthInterceptor(login, password))
                 .build();
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080/")
+                //.baseUrl("http://10.0.2.2:8080/")
+                .baseUrl("https://4aac80a6.ngrok.io")
                 .client(httpClient)
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
@@ -33,7 +34,7 @@ public class ServiceFactory {
                 .addInterceptor(new BasicAuthInterceptor(login, password))
                 .build();
         return  new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080/")
+                .baseUrl("https://4aac80a6.ngrok.io/")
                 .client(httpClient)
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build().create(SprintsService.class);
