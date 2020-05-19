@@ -125,5 +125,9 @@ public class SprintsActivity extends AppCompatActivity {
             }
         });
     }
+    public void showGantt(View v) {
+        Intent intent = new Intent(this, DiagramActivity.class);
+        startActivity(intent);
+    }
 
 }

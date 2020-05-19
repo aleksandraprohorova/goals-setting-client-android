@@ -28,6 +28,14 @@
         android:layout_height="wrap_content"
         android:onClick="addSprint"
         android:text="new sprint">
+    </Button>
+
+    <Button
+        android:id="@+id/showGanttButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showGantt"
+        android:text="Gantt diagram">
 
     </Button>
 

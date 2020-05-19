@@ -8,10 +8,6 @@ public class ServiceFactory {
     private static String login;
     private static String password;
     private static Retrofit retrofit;
-    /*private static Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/")
-            .addConverterFactory(JacksonConverterFactory.create())
-            .build();*/
 
     public static void setAuthorizeParameters(String l, String p) { login = l;
         password = p;
@@ -19,8 +15,8 @@ public class ServiceFactory {
                 .addInterceptor(new BasicAuthInterceptor(login, password))
                 .build();
         retrofit = new Retrofit.Builder()
-                //.baseUrl("http://10.0.2.2:8080/")
-                .baseUrl("https://4aac80a6.ngrok.io")
+                .baseUrl("http://10.0.2.2:8080/")
+                //.baseUrl("http://f09bf37f.ngrok.io")
                 .client(httpClient)
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
@@ -34,20 +30,13 @@ public class ServiceFactory {
                 .addInterceptor(new BasicAuthInterceptor(login, password))
                 .build();
         return  new Retrofit.Builder()
-                .baseUrl("https://4aac80a6.ngrok.io/")
+                .baseUrl("http://10.0.2.2:8080/")
+                //.baseUrl("http://f09bf37f.ngrok.io")
                 .client(httpClient)
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build().create(SprintsService.class);
     }
     public static RegistrationService getRegistrationService() {
-        /*OkHttpClient httpClient = new OkHttpClient.Builder()
-                .addInterceptor(new BasicAuthInterceptor(login, password))
-                .build();
-        return  new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080/")
-                .client(httpClient)
-                .addConverterFactory(JacksonConverterFactory.create())
-                .build().create(RegistrationService.class);*/
         return retrofit.create(RegistrationService.class);
     }
 }
